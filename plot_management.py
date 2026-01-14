@@ -35,13 +35,10 @@ def plot_for_power():
 		
 		if finished_drones == len(drones):
 			return
-	
-		
-	
-	
-def plot_for_hay():	
+
+def plot_for_hay():
 	utils.map_over_map(crops.farm_crop_at(Entities.Sunflower))
-	
+
 def plot_for_wood():
 	def plant_trees(pos):
 		movement.go_to(pos)
@@ -72,12 +69,12 @@ def plot_for_weird_substance():
 				crops.plant_crop(Entities.Tree)
 			else:
 				crops.plant_crop(Entities.Grass)
-		
+
 	utils.map_over_map(plot_for_weird_substance)
-	
+
 def plot_for_gold():
 	gold.farm_maze()
-	
+
 plot_function_for_item = {
 	Items.Power:           plot_for_power,
 	Items.Hay:             plot_for_hay,
@@ -105,7 +102,3 @@ def auto_plotter(minimum_amounts):
 		if num_items(item) < minimum_amounts[item]:
 			change_hat(hat_for_item[item])
 			plot_function_for_item[item]()
-	
-	
-			
-	

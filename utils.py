@@ -2,13 +2,13 @@ def map_over_map(func):
 	pos = (0,0)
 	area = (get_world_size(), get_world_size())
 	map_over_area(func, pos, area)
-			
+
 def map_over_area(func, pos, size):
 	coords = generate_snake_coords(pos, size)
 	for position in coords:
 		func(position)
 	return
-			
+
 def run_infinite(func):
 	while True:
 		func()

@@ -2,28 +2,20 @@ import movement
 import utils
 import crops
 
-def replant_pumpkins(replant_positions):
-	replant_record = []
-	
-	for position in replant_positions:
+def plant_pumpkin_field(pos, size):
+	replant_record = utils.generate_snake_coords(pos, size)
+
+	while replant_record:
+		next_round = []
+
+	for position in replant_record:
 		movement.go_to(position)
 		entity = get_entity_type()
-		
-		if entity == Entities.Pumpkin and can_harvest():
-			continue
-		
+
 		if entity != Entities.Pumpkin:
 			crops.plant_crop(Entities.Pumpkin)
-			
-		replant_record.append((position))
-			
-	return replant_record
+			next_round.append(position)
+		elif not can_harvest():
+			next_round.append(position)
 
-def farm_pumpkin_field(pos, size):
-	replant_record = utils.generate_snake_coords(pos, size)
-	
-	while replant_record:
-		replant_record = replant_pumpkins(replant_record)
-
-	movement.go_to(pos)
-	harvest()
+	replant_record = next_round
