@@ -1,23 +1,23 @@
 import movement
 
 grounds_for_entity = {
-	Entities.Grass: Grounds.Grassland,
-	Entities.Bush: Grounds.Grassland,
-	Entities.Tree: Grounds.Grassland,
-	Entities.Carrot: Grounds.Soil,
-	Entities.Pumpkin: Grounds.Soil,
-	Entities.Dead_Pumpkin: Grounds.Soil,
-	Entities.Sunflower: Grounds.Soil,
-	Entities.Cactus: Grounds.Soil
+	Entities.Grass:			Grounds.Grassland,
+	Entities.Bush:			Grounds.Grassland,
+	Entities.Tree:			Grounds.Grassland,
+	Entities.Carrot:		Grounds.Soil,
+	Entities.Pumpkin:		Grounds.Soil,
+	Entities.Dead_Pumpkin:	Grounds.Soil,
+	Entities.Sunflower:		Grounds.Soil,
+	Entities.Cactus:		Grounds.Soil
 }
 
 entity_for_item = {
-	Items.Power: Entities.Sunflower,
-	Items.Hay: Entities.Grass,
-	Items.Wood: Entities.Bush,
-	Items.Carrot: Entities.Carrot,
-	Items.Pumpkin: Entities.Pumpkin,
-	Items.Cactus: Entities.Cactus,
+	Items.Power: 			Entities.Sunflower,
+	Items.Hay:				Entities.Grass,
+	Items.Wood: 			Entities.Bush,
+	Items.Carrot: 			Entities.Carrot,
+	Items.Pumpkin: 			Entities.Pumpkin,
+	Items.Cactus: 			Entities.Cactus,
 }
 
 def try_harvest():

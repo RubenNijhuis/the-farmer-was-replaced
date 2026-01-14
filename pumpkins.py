@@ -1,9 +1,9 @@
 import movement
-import utils
+import coordinates
 import crops
 
-def plant_pumpkin_field(pos, size):
-	replant_record = utils.generate_snake_coords(pos, size)
+def plant_field(pos, size):
+	replant_record = coordinates.generate_coords_from_area(pos, size, "SNAKE")
 
 	while replant_record:
 		next_round = []
@@ -19,3 +19,5 @@ def plant_pumpkin_field(pos, size):
 			next_round.append(position)
 
 	replant_record = next_round
+
+	
