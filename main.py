@@ -12,6 +12,7 @@ import sunflowers
 import cactus
 import weird_substance
 import gold
+import dinosaurs
 
 clear()
 # set_execution_speed(10)
@@ -28,7 +29,7 @@ MODE = "test"
 # TEST MODE: Pick a crop to farm continuously
 # Options: hay, trees, carrots, pumpkins, sunflowers, cactus, weird_substance, gold
 # =============================================================================
-TEST_CROP = "hay"
+TEST_CROP = "bone"
 
 test_funcs = {
 	"hay": hay.plant_field,
@@ -39,6 +40,7 @@ test_funcs = {
 	"cactus": cactus.farm_field,
 	"weird_substance": weird_substance.plant_field,
 	"gold": gold.farm_maze,
+	"bone": dinosaurs.farm_field,
 }
 
 # =============================================================================
@@ -64,6 +66,8 @@ if MODE == "test":
 		# Cactus handles its own parallelization internally
 		while True:
 			cactus.farm_field(FULL_MAP)
+	elif TEST_CROP == "bone":
+		dinosaurs.farm_field(FULL_MAP)
 	else:
 		multi.run_func_looped(FULL_MAP, test_funcs[TEST_CROP])
 
