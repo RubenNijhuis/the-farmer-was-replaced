@@ -3,22 +3,56 @@ import crops
 # Global dictionary to keep track of current cost for one crop
 current_crop_cost = {}
 
+# Map items to their yield unlock
+unlock_for_item = {
+	Items.Hay: Unlocks.Grass,
+	Items.Wood: Unlocks.Trees,
+	Items.Carrot: Unlocks.Carrots,
+	Items.Pumpkin: Unlocks.Pumpkins,
+	Items.Cactus: Unlocks.Cactus,
+}
 
-def get_pumpkin_yield_per_planted():
-	# Pumpkin yield: n³ for n < 6, or n² × 6 for n >= 6
-	# Planted: n² (full world)
-	# Yield per planted = n (for n < 6) or 6 (for n >= 6)
+
+def get_unlock_multiplier(item):
+	# Each unlock level doubles yield: 2^(level-1)
+	if item not in unlock_for_item:
+		return 1
+	unlock = unlock_for_item[item]
+	level = num_unlocked(unlock)
+	if level <= 1:
+		return 1
+	result = 1
+	for i in range(level - 1):
+		result = result * 2
+	return result
+
+
+def get_yield_per_planted(item):
+	# Base yield from game mechanics + unlock multiplier
+	unlock_mult = get_unlock_multiplier(item)
 	n = get_world_size()
-	if n < 6:
-		return n
-	return 6
 
+	# Pumpkin: nxn mega pumpkin yields n³ (n<6) or n²×6 (n>=6)
+	# Yield per planted = n (n<6) or 6 (n>=6)
+	# 20% death rate reduces effective yield to 80% (multiply by 4/5)
+	if item == Items.Pumpkin:
+		if n < 6:
+			base_yield = n
+		else:
+			base_yield = 6
+		effective_yield = (base_yield * unlock_mult * 4) // 5
+		if effective_yield < 1:
+			effective_yield = 1
+		return effective_yield
 
-def get_cactus_yield_per_planted():
-	# Cactus yield: count² where count = n² (full sorted chain)
-	# Yield per planted = n² (for nxn world)
-	n = get_world_size()
-	return n * n
+	# Cactus: chain harvest of n² cacti gives (n²)² items
+	# Yield per planted = n²
+	if item == Items.Cactus:
+		base_yield = n * n
+		return base_yield * unlock_mult
+
+	# Other crops: just the unlock multiplier
+	return unlock_mult
 
 
 def order_cost_list(cost_dict):
@@ -69,18 +103,11 @@ def calculate_items_for_unlock_cost(target_unlock):
 			# For yield-multiplied crops, adjust the expansion multiplier
 			if sub_item in crops.entity_for_item:
 				entity = crops.entity_for_item[sub_item]
-				adjusted_amount = amount
-
-				# Pumpkins: we get n³ or n²×6 from n² planted
-				if sub_item == Items.Pumpkin:
-					yield_ratio = get_pumpkin_yield_per_planted()
+				yield_ratio = get_yield_per_planted(sub_item)
+				if yield_ratio > 1:
 					adjusted_amount = (amount // yield_ratio) + 1
-
-				# Cactus: we get (n²)² from n² planted
-				elif sub_item == Items.Cactus:
-					yield_ratio = get_cactus_yield_per_planted()
-					adjusted_amount = (amount // yield_ratio) + 1
-
+				else:
+					adjusted_amount = amount
 				expand(entity, adjusted_amount)
 
 	expand(target_unlock)

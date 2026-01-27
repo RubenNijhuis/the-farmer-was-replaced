@@ -16,8 +16,8 @@ def plant_field(area):
 			entity = get_entity_type()
 
 			if entity != Entities.Pumpkin:
-				if get_water() < 0.5:
-					use_item(Items.Water)
+				# if get_water() < 0.5:
+				# 	use_item(Items.Water)
 				crops.plant_crop(Entities.Pumpkin)
 				next_round.append(position)
 			elif not can_harvest():
@@ -35,17 +35,16 @@ def farm_field(area):
 
 
 # Farm pumpkins until we have at least 'amount'
-# Uses parallel drones if Megafarm is unlocked, otherwise single-threaded
-# Note: Uses farm_field (not plant_field) because pumpkins need final harvest
+# Uses parallel planting (like main.py), then single harvest
 def farm(area, amount):
-	def has_enough():
-		return num_items(Items.Pumpkin) >= amount
+	pos = area[0]
 
-	if has_enough():
-		return
-
-	if num_unlocked(Unlocks.Megafarm) > 0:
-		multi.run_func_until(area, farm_field, {"should_stop": has_enough})
-	else:
-		while not has_enough():
+	while num_items(Items.Pumpkin) < amount:
+		if num_unlocked(Unlocks.Megafarm) > 0:
+			# Parallel plant, then single harvest
+			multi.run_func(area, plant_field)
+			movement.go_to(pos)
+			harvest()
+		else:
+			# Single-threaded
 			farm_field(area)

@@ -29,7 +29,7 @@ MODE = "test"
 # TEST MODE: Pick a crop to farm continuously
 # Options: hay, trees, carrots, pumpkins, sunflowers, cactus, weird_substance, gold
 # =============================================================================
-TEST_CROP = "bone"
+TEST_CROP = "pumpkins"
 
 test_funcs = {
 	"hay": hay.plant_field,

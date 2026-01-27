@@ -3,7 +3,7 @@ sim_unlocks = {}
 sim_items = {}
 sim_globals = {}
 seed = -1
-speedup = 100
+speedup = 10000000
 
 clear()
 
