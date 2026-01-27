@@ -56,7 +56,7 @@ def set_soil_for_crop(crop):
 def plant_crop(crop):
 	try_harvest()
 	set_soil_for_crop(crop)
-	use_item(Items.Water)
+	# use_item(Items.Water)
 	plant(crop)
 
 

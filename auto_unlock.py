@@ -26,65 +26,122 @@ farm_func_for_item = {
 	Items.Bone: dinosaurs.farm,
 }
 
-# Order of unlocks for game progression
-# Upgradable unlocks: Trees, Carrots, Grass, Pumpkins, Cactus, Mazes, Dinosaurs, Speed, Expand, Sunflowers
+# Max upgrade levels for each unlock:
+# Speed: 5, Expand: 9, Grass: 10, Carrots: 10, Watering: 9, Trees: 10
+# Fertilizer: 4, Pumpkins: 10, Cactus: 6, Mazes: 6, Polyculture: 5, Megafarm: 5, Dinosaurs: 6, Hats: 1
+
 unlock_order = [
-	# Early game - basic resources
-	Unlocks.Speed,
-	Unlocks.Expand,
+	# === PHASE 1: Bootstrap (alternating Speed/Expand + basics) ===
+	# Note: Expand 5+ requires Pumpkins, so unlock Pumpkins before Expand 5
+	Unlocks.Speed,        # 1
+	Unlocks.Expand,       # 1
 	Unlocks.Plant,
-	Unlocks.Expand,
-	Unlocks.Speed,
-	Unlocks.Carrots,
-	Unlocks.Expand,
-	Unlocks.Speed,
-	Unlocks.Watering,
-	Unlocks.Trees,
-	Unlocks.Grass,
-	Unlocks.Trees,
-	Unlocks.Trees,
-	Unlocks.Carrots,
-	Unlocks.Carrots,  # Extra carrot upgrade for better yield
+	Unlocks.Speed,        # 2
+	Unlocks.Expand,       # 2
+	Unlocks.Carrots,      # 1
+	Unlocks.Speed,        # 3
+	Unlocks.Expand,       # 3
+	Unlocks.Watering,     # 1
+	Unlocks.Trees,        # 1
+	Unlocks.Speed,        # 4
+	Unlocks.Expand,       # 4
+	Unlocks.Grass,        # 1
+	Unlocks.Speed,        # 5 (MAX)
+	Unlocks.Pumpkins,     # 1 - MUST be before Expand 5!
+	Unlocks.Expand,       # 5
+
+	# === PHASE 2: Moderate yields (interleaved, not maxing yet) ===
+	Unlocks.Grass,        # 2
+	Unlocks.Trees,        # 2
+	Unlocks.Carrots,      # 2
+	Unlocks.Grass,        # 3
+	Unlocks.Trees,        # 3
+	Unlocks.Carrots,      # 3
+	Unlocks.Watering,     # 2
+	Unlocks.Trees,        # 4
+	Unlocks.Carrots,      # 4
+	Unlocks.Watering,     # 3
+	Unlocks.Pumpkins,     # 2
+	Unlocks.Expand,       # 6
 	Unlocks.Sunflowers,
-	Unlocks.Grass,  # Extra grass upgrade
-	Unlocks.Expand,
-	Unlocks.Pumpkins,
-	# Mid game - advanced crops
-	Unlocks.Speed,
-	Unlocks.Pumpkins,
-	Unlocks.Pumpkins,  # Extra pumpkin upgrade (yield = count^3)
-	Unlocks.Expand,
-	Unlocks.Cactus,
-	Unlocks.Speed,
-	Unlocks.Cactus,
-	Unlocks.Cactus,  # Extra cactus upgrade (yield = count^2)
-	Unlocks.Expand,
-	Unlocks.Fertilizer,
-	Unlocks.Cactus,  # More cactus upgrades
-	Unlocks.Mazes,
-	Unlocks.Expand,
-	Unlocks.Mazes,
-	Unlocks.Mazes,  # Extra maze upgrade for more gold
-	Unlocks.Speed,
-	Unlocks.Dinosaurs,
-	# Late game - optimization
-	Unlocks.Expand,
-	Unlocks.Dinosaurs,
-	Unlocks.Dinosaurs,  # Extra dinosaur upgrade
-	Unlocks.Speed,
-	Unlocks.Speed,  # Max speed helps a lot
-	Unlocks.Polyculture,
-	Unlocks.Megafarm,
-	# Post-megafarm upgrades (parallel farming makes these faster)
-	Unlocks.Trees,  # More tree upgrades now that we have megafarm
-	Unlocks.Trees,
-	Unlocks.Carrots,
-	Unlocks.Pumpkins,
-	Unlocks.Cactus,
-	Unlocks.Mazes,
-	Unlocks.Dinosaurs,
-	Unlocks.Expand,  # Max expand
+	Unlocks.Grass,        # 4
+	Unlocks.Trees,        # 5
+	Unlocks.Grass,        # 5
+	Unlocks.Carrots,      # 5
+	Unlocks.Trees,        # 6
+	Unlocks.Pumpkins,     # 3
+	Unlocks.Pumpkins,     # 4
+	Unlocks.Grass,        # 6
+	Unlocks.Carrots,      # 6
+	Unlocks.Pumpkins,     # 5
+
+	# === PHASE 3: Push to Megafarm/Expand MAX (priority!) ===
+	Unlocks.Watering,     # 4
+	Unlocks.Fertilizer,   # 1
+	Unlocks.Watering,     # 5
+	Unlocks.Fertilizer,   # 2
+	Unlocks.Mazes,        # 1
+	Unlocks.Megafarm,     # 1 - PARALLEL FARMING!
+ 	Unlocks.Expand,       # 8
+	Unlocks.Megafarm,     # 2
+	Unlocks.Grass,        # 7
+	Unlocks.Megafarm,     # 3
+	Unlocks.Trees,        # 7
+ 	Unlocks.Expand,       # 7
+	Unlocks.Megafarm,     # 4
+	Unlocks.Carrots,      # 7
+ 	Unlocks.Expand,       # 9 (MAX)
+	Unlocks.Megafarm,     # 5 (MAX)
+
+	# === PHASE 4: Cactus + mid yields (interleaved) ===
+	Unlocks.Cactus,       # 1
+	Unlocks.Pumpkins,     # 6
+	Unlocks.Cactus,       # 2
+	Unlocks.Grass,        # 8
+	Unlocks.Cactus,       # 3
+	Unlocks.Trees,        # 8
+	Unlocks.Cactus,       # 4
+	Unlocks.Carrots,      # 8
+	Unlocks.Cactus,       # 5
+	Unlocks.Pumpkins,     # 7
+	Unlocks.Cactus,       # 6 (MAX)
+	Unlocks.Mazes,        # 2
+
+	# === PHASE 5: Higher yields + Mazes (interleaved) ===
+	Unlocks.Grass,        # 9
+	Unlocks.Mazes,        # 3
+	Unlocks.Trees,        # 9
+	Unlocks.Mazes,        # 4
+	Unlocks.Carrots,      # 9
+	Unlocks.Mazes,        # 5
+	Unlocks.Pumpkins,     # 8
+	Unlocks.Mazes,        # 6 (MAX)
+	Unlocks.Watering,     # 6
+	Unlocks.Polyculture,  # 1
+
+	# === PHASE 6: Late game - Dinosaurs + MAX yields ===
+	Unlocks.Dinosaurs,    # 1
+	Unlocks.Grass,        # 10 (MAX)
+	Unlocks.Dinosaurs,    # 2
+	Unlocks.Trees,        # 10 (MAX)
+	Unlocks.Dinosaurs,    # 3
+	Unlocks.Carrots,      # 10 (MAX)
+	Unlocks.Dinosaurs,    # 4
+	Unlocks.Pumpkins,     # 9
+	Unlocks.Dinosaurs,    # 5
+	Unlocks.Pumpkins,     # 10 (MAX)
+	Unlocks.Dinosaurs,    # 6 (MAX)
+	Unlocks.Watering,     # 7
+	Unlocks.Fertilizer,   # 3
+	Unlocks.Watering,     # 8
+	Unlocks.Fertilizer,   # 4 (MAX)
+	Unlocks.Watering,     # 9 (MAX)
+	Unlocks.Polyculture,  # 2
+	Unlocks.Hats,
+	Unlocks.Polyculture,  # 3
 	Unlocks.Leaderboard,
+	Unlocks.Polyculture,  # 4
+	Unlocks.Polyculture,  # 5 (MAX)
 ]
 
 
@@ -151,9 +208,6 @@ def farm_carrots_early(amount):
 			# Carrots need soil - till grassland to soil
 			if get_ground_type() != Grounds.Soil:
 				till()
-			if num_unlocked(Unlocks.Watering) > 0:
-				if get_water() < 0.5:
-					use_item(Items.Water)
 			plant(Entities.Carrot)
 		pass_count = pass_count + 1
 		if pass_count % 3 == 0:
@@ -226,6 +280,13 @@ def main():
 		quick_print("Current level: ", current_level)
 		quick_print("World size: ", get_world_size(), "x", get_world_size())
 
+		# Show parallel farming status
+		megafarm_level = num_unlocked(Unlocks.Megafarm)
+		if megafarm_level > 0:
+			quick_print("PARALLEL MODE: Megafarm lvl ", megafarm_level, " | max_drones=", max_drones())
+		else:
+			quick_print("SINGLE DRONE MODE (no Megafarm yet)")
+
 		# Check if unlock is available (get_cost returns None if not available/already maxed)
 		cost = get_cost(unlock_item)
 		if cost == None:
@@ -265,8 +326,8 @@ def main():
 		if result:
 			quick_print("SUCCESS: ", unlock_item, " now level ", num_unlocked(unlock_item))
 		else:
-			# Debug why it failed
-			quick_print("FAILED to unlock ", unlock_item, "!")
+			# Debug why it failed and STOP
+			quick_print("!!! FAILED to unlock ", unlock_item, " !!!")
 			actual_cost = get_cost(unlock_item)
 			if actual_cost == None:
 				quick_print("  Reason: Unlock not available (prerequisite missing?)")
@@ -277,6 +338,9 @@ def main():
 					need = actual_cost[cost_item]
 					if have < need:
 						quick_print("  MISSING: ", cost_item, " have ", have, " need ", need)
+			quick_print("STOPPING - fix the unlock order and restart!")
+			while True:
+				do_a_flip()
 		quick_print("Time: ", get_time())
 
 	quick_print("")
